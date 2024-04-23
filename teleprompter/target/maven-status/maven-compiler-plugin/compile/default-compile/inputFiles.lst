@@ -1,0 +1,10 @@
+/home/andywebb/JavaProject/TelePrompter/teleprompter/src/main/java/com/tspdevelop/teleprompt/config/ConfigFont.java
+/home/andywebb/JavaProject/TelePrompter/teleprompter/src/main/java/com/tspdevelop/teleprompt/config/ConfigScript.java
+/home/andywebb/JavaProject/TelePrompter/teleprompter/src/main/java/com/tspdevelop/teleprompt/video/VideoGenerator.java
+/home/andywebb/JavaProject/TelePrompter/teleprompter/src/main/java/com/tspdevelop/teleprompt/video/VideoGeneratorListener.java
+/home/andywebb/JavaProject/TelePrompter/teleprompter/src/main/java/com/tspdevelop/teleprompt/config/Config.java
+/home/andywebb/JavaProject/TelePrompter/teleprompter/src/main/java/com/tspdevelop/teleprompt/App.java
+/home/andywebb/JavaProject/TelePrompter/teleprompter/src/main/java/com/tspdevelop/teleprompt/config/ConfigVideo.java
+/home/andywebb/JavaProject/TelePrompter/teleprompter/src/main/java/com/tspdevelop/teleprompt/config/exceptions/ConfigException.java
+/home/andywebb/JavaProject/TelePrompter/teleprompter/src/main/java/com/tspdevelop/teleprompt/config/ConfigColor.java
+/home/andywebb/JavaProject/TelePrompter/teleprompter/src/main/java/com/tspdevelop/teleprompt/video/FrameGenerator.java
