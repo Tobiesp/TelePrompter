@@ -1,0 +1,12 @@
+com/tspdevelop/teleprompt/config/ConfigVideo.class
+com/tspdevelop/teleprompt/video/FrameGenerator.class
+com/tspdevelop/teleprompt/video/VideoGeneratorListener.class
+com/tspdevelop/teleprompt/App.class
+com/tspdevelop/teleprompt/config/Config.class
+com/tspdevelop/teleprompt/video/VideoGenerator.class
+com/tspdevelop/teleprompt/config/exceptions/ConfigException.class
+com/tspdevelop/teleprompt/config/ConfigFont.class
+com/tspdevelop/teleprompt/config/ConfigScript.class
+com/tspdevelop/teleprompt/video/FrameGenerator$Frame.class
+com/tspdevelop/teleprompt/App$1.class
+com/tspdevelop/teleprompt/config/ConfigColor.class

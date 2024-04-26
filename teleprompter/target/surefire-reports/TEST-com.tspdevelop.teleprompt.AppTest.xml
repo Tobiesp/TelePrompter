@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.tspdevelop.teleprompt.AppTest" time="0.067" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.tspdevelop.teleprompt.AppTest" time="0.049" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="gnome"/>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
     <property name="java.specification.version" value="11"/>
     <property name="sun.cpu.isalist" value=""/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
-    <property name="java.class.path" value="/home/andywebb/JavaProject/TelePrompter/teleprompter/target/test-classes:/home/andywebb/JavaProject/TelePrompter/teleprompter/target/classes:/home/andywebb/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/andywebb/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:"/>
+    <property name="java.class.path" value="/home/andywebb/JavaProject/TelePrompter/teleprompter/target/test-classes:/home/andywebb/JavaProject/TelePrompter/teleprompter/target/classes:/home/andywebb/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/andywebb/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/andywebb/.m2/repository/io/humble/humble-video-all/0.3.0/humble-video-all-0.3.0.jar:/home/andywebb/.m2/repository/io/humble/humble-video-noarch/0.3.0/humble-video-noarch-0.3.0.jar:/home/andywebb/.m2/repository/io/humble/humble-video-arch-x86_64-pc-linux-gnu6/0.3.0/humble-video-arch-x86_64-pc-linux-gnu6-0.3.0.jar:/home/andywebb/.m2/repository/org/slf4j/slf4j-api/2.0.13/slf4j-api-2.0.13.jar:/home/andywebb/.m2/repository/org/yaml/snakeyaml/2.2/snakeyaml-2.2.jar:/home/andywebb/.m2/repository/commons-cli/commons-cli/1.2/commons-cli-1.2.jar:"/>
     <property name="java.vm.vendor" value="Red Hat, Inc."/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.vendor.url" value="https://www.redhat.com/"/>
@@ -16,9 +16,9 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-11-openjdk-11.0.22.0.7-1.fc39.x86_64/lib"/>
-    <property name="sun.java.command" value="/home/andywebb/JavaProject/TelePrompter/teleprompter/target/surefire/surefirebooter6954073159444670885.jar /home/andywebb/JavaProject/TelePrompter/teleprompter/target/surefire 2024-04-17T22-43-22_605-jvmRun1 surefire3369283853773366660tmp surefire_013611465932750780332tmp"/>
+    <property name="sun.java.command" value="/home/andywebb/JavaProject/TelePrompter/teleprompter/target/surefire/surefirebooter7995125810419564169.jar /home/andywebb/JavaProject/TelePrompter/teleprompter/target/surefire 2024-04-24T23-31-58_362-jvmRun1 surefire6987302386136459767tmp surefire_012263155333681746101tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="surefire.test.class.path" value="/home/andywebb/JavaProject/TelePrompter/teleprompter/target/test-classes:/home/andywebb/JavaProject/TelePrompter/teleprompter/target/classes:/home/andywebb/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/andywebb/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:"/>
+    <property name="surefire.test.class.path" value="/home/andywebb/JavaProject/TelePrompter/teleprompter/target/test-classes:/home/andywebb/JavaProject/TelePrompter/teleprompter/target/classes:/home/andywebb/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/andywebb/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/andywebb/.m2/repository/io/humble/humble-video-all/0.3.0/humble-video-all-0.3.0.jar:/home/andywebb/.m2/repository/io/humble/humble-video-noarch/0.3.0/humble-video-noarch-0.3.0.jar:/home/andywebb/.m2/repository/io/humble/humble-video-arch-x86_64-pc-linux-gnu6/0.3.0/humble-video-arch-x86_64-pc-linux-gnu6-0.3.0.jar:/home/andywebb/.m2/repository/org/slf4j/slf4j-api/2.0.13/slf4j-api-2.0.13.jar:/home/andywebb/.m2/repository/org/yaml/snakeyaml/2.2/snakeyaml-2.2.jar:/home/andywebb/.m2/repository/commons-cli/commons-cli/1.2/commons-cli-1.2.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="/home/andywebb"/>
     <property name="user.language" value="en"/>
@@ -32,7 +32,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="/home/andywebb/JavaProject/TelePrompter/teleprompter/target/surefire/surefirebooter6954073159444670885.jar"/>
+    <property name="surefire.real.class.path" value="/home/andywebb/JavaProject/TelePrompter/teleprompter/target/surefire/surefirebooter7995125810419564169.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="11.0.22+7"/>
     <property name="user.name" value="andywebb"/>
@@ -59,5 +59,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="55.0"/>
   </properties>
-  <testcase name="shouldAnswerWithTrue" classname="com.tspdevelop.teleprompt.AppTest" time="0.004"/>
+  <testcase name="shouldAnswerWithTrue" classname="com.tspdevelop.teleprompt.AppTest" time="0.001"/>
 </testsuite>

@@ -5,10 +5,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.tspdevelop.teleprompt</groupId>
-  <artifactId>teleprompter</artifactId>
+  <artifactId>telleJ</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>teleprompter</name>
+  <name>telleJ</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
@@ -70,6 +70,12 @@
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.0.2</version>
+          <executions>
+            <execution>
+                <id>default-jar</id>
+                <phase>none</phase>
+            </execution>
+        </executions>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
@@ -88,7 +94,31 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
+        <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.7.1</version>
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+          <archive>
+            <manifest>
+              <mainClass>com.tspdevelop.teleprompt.App</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id> <!-- this is used for inheritance merges -->
+            <phase>package</phase> <!-- bind to the packaging phase -->
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
       </plugins>
     </pluginManagement>
   </build>
+    <description>Generate a video base off a text script that can be used as for telleprompting</description>
 </project>
