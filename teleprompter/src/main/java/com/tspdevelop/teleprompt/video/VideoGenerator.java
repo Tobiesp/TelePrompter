@@ -208,9 +208,6 @@ public class VideoGenerator {
             } while (packet.isComplete());
             index++;
         }
-    }
-
-    public void closeVideo() {
         if (packet != null) {
             do {
                 encoder.encode(packet, null);

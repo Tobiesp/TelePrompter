@@ -2,6 +2,7 @@ package com.tspdevelop.teleprompt.config;
 
 import com.tspdevelop.teleprompt.config.exceptions.ConfigException;
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 
 /**
  *
@@ -43,6 +44,10 @@ public class ConfigFont {
         this.style = style;
     }
     
+    private String[] getAllFonts() {
+        return GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+    }
+    
     public Font getFont() throws ConfigException {
         int s = Font.PLAIN;
         if (name == null || name.isBlank()) {
@@ -69,7 +74,20 @@ public class ConfigFont {
         if (size == 0) {
             size = 100;
         }
-        return new Font(name, s, size);
+        String font = name;
+        if(font == null || font.isBlank()) {
+            String[] fontList = getAllFonts();
+            for(String f: fontList) {
+                if("Arial".equals(f)) {
+                    font = f;
+                    break;
+                }
+            }
+            if(font == null || font.isBlank()) {
+                font = fontList[0];
+            }
+        }
+        return new Font(font, s, size);
     }
     
 }

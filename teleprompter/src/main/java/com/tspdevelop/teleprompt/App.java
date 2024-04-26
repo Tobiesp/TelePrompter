@@ -3,6 +3,7 @@ package com.tspdevelop.teleprompt;
 import com.tspdevelop.teleprompt.config.Config;
 import com.tspdevelop.teleprompt.config.exceptions.ConfigException;
 import com.tspdevelop.teleprompt.video.VideoGenerator;
+import com.tspdevelop.teleprompt.video.VideoGeneratorListener;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
@@ -23,7 +24,6 @@ public class App
     public static void main( String[] args ) {
         try {
             Config config = processCLI(args);
-            validateConfig(config);
             generateVideo(config);
         } catch (ParseException ex) {
             printErrorAndExit("Unable to parse arguments: " + ex.getMessage());
@@ -57,13 +57,38 @@ public class App
             if (config.getScript().getDelay() > 0) {
                 vg.setDelay(config.getScript().getDelay());
             }
-            
+            VideoGeneratorListener listener = new VideoGeneratorListener() {
+                private final int MAX_LENGTH = 80;
+                private boolean firstRun = true;
+                @Override
+                public void updateProgress(double percent) {
+                    String label = String.valueOf(percent) + "%";
+                    if (firstRun) {
+                        System.out.println("Generating Video");
+                    }
+                    int len = this.MAX_LENGTH - label.length() - 2;
+                    int half = len / 2;
+                    int count = (int) ((percent / 100) * len);
+                    String pLabel = "[";
+                    for (int i = 0; i<len; i++) {
+                        if (i < count) {
+                            pLabel += "=";
+                        } else {
+                            pLabel += " ";
+                        }
+                        if (i == half) {
+                            pLabel += label;
+                        }
+                    }
+                    System.out.print("\r" + pLabel);
+                }
+            };
+            vg.setListener(listener);
             vg.writeTeleprompter(
                     config.getScript().getScriptValue(), 
                     config.getScript().getWordsPerMinValue(), 
                     background, 
                     forground);
-            vg.closeVideo();
         } catch (ConfigException ex) {
             printErrorAndExit("Config Exception: " + ex.getMessage());
         }
@@ -72,10 +97,6 @@ public class App
     private static void printErrorAndExit(String msg) {
         System.err.println(msg);
         System.exit(1);
-    }
-    
-    private static void validateConfig(Config config) {
-        
     }
     
     private static Config processCLI(String[] args) throws ParseException {
@@ -96,14 +117,16 @@ public class App
           System.out.println("Humble Version: " + version);
           System.out.println("commons-cli Version: 1.2");
           System.out.println("snakeYAML Version: 2.2");
-        } else if (cmd.hasOption("help") || parsedArgs.length != 1) {
+        } else if (cmd.hasOption("help") || parsedArgs.length == 0) {
           HelpFormatter formatter = new HelpFormatter();
-          formatter.printHelp(App.class.getCanonicalName() + " <yamlfilepath>", options);
+          if (parsedArgs.length == 0) {
+            System.err.println("Error: No options or YAML file supplied!\n");
+            formatter.printHelp("Tellej <yamlfilepath> [Options]", options);
+            System.exit(1);
+          }
+          formatter.printHelp(App.class.getCanonicalName() + " <yamlfilepath> [Options]", options);
+          System.exit(0);
         } else {
-          /**
-           * Read in some option values and their defaults.
-           */
-          //yaml
           if (cmd.hasOption("yaml")) {
               try {
                   config = processYamlConfig(cmd.getOptionValue("yaml"));
