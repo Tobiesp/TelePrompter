@@ -51,6 +51,9 @@ public class VideoGenerator {
         this.width = (int) Math.round(videoSize * 1.77777778);
         this.framesPerSec = frameRate;
         this.Filename = filename;
+        if (this.Filename == null || this.Filename.isBlank()) {
+            throw new IOException("No name supplied for the video file");
+        }
         File f = new File(this.Filename);
         if (f.exists()) {
             throw new IOException("Video file already exists: " + this.Filename);
@@ -154,6 +157,10 @@ public class VideoGenerator {
     }
     
     public void writeTeleprompter(String script, int wordsPerMin, Color bg, Color fg) throws InterruptedException, IOException {
+        if(this.font == null) {
+            throw new RuntimeException("Font not set.");
+        }
+        
         createEncoder();
         MediaPictureConverter converter = null;
         final MediaPicture picture = MediaPicture.make(
@@ -192,7 +199,9 @@ public class VideoGenerator {
                 }
                 if(percentage > previousPercentage) {
                     previousPercentage = (int)Math.round(percentage) + 1;
-                    this.listener.updateProgress(percentage);
+                    if(percentage <= 100.0) {
+                        this.listener.updateProgress(percentage);
+                    }
                 }
             }
             final BufferedImage screen = generator.nextFrame();
@@ -221,6 +230,10 @@ public class VideoGenerator {
          * Finally, let's clean up after ourselves.
          */
         muxer.close();
+        if(this.listener != null) {
+            this.listener.updateProgress(100);
+            this.listener.done();
+        }
     }
 
 }

@@ -44,15 +44,12 @@ public class ConfigFont {
         this.style = style;
     }
     
-    private String[] getAllFonts() {
+    public static String[] getAllFonts() {
         return GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
     }
     
     public Font getFont() throws ConfigException {
         int s = Font.PLAIN;
-        if (name == null || name.isBlank()) {
-            throw new ConfigException("Could not find font name.");
-        }
         if (style == null || style.isBlank()) {
             style = "plain";
         }
@@ -69,7 +66,7 @@ public class ConfigFont {
                 break;
         }
         if (size < 0) {
-            throw new ConfigException("Could not find font size has to be bigger then 0: " + String.valueOf(size));
+            throw new ConfigException("font size has to be bigger then 0: " + String.valueOf(size));
         }
         if (size == 0) {
             size = 100;

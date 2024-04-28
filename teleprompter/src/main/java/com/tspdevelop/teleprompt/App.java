@@ -1,6 +1,7 @@
 package com.tspdevelop.teleprompt;
 
 import com.tspdevelop.teleprompt.config.Config;
+import com.tspdevelop.teleprompt.config.ConfigFont;
 import com.tspdevelop.teleprompt.config.exceptions.ConfigException;
 import com.tspdevelop.teleprompt.video.VideoGenerator;
 import com.tspdevelop.teleprompt.video.VideoGeneratorListener;
@@ -13,6 +14,7 @@ import java.io.InputStream;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
@@ -63,16 +65,17 @@ public class App
                 @Override
                 public void updateProgress(double percent) {
                     String label = String.valueOf(percent) + "%";
-                    if (firstRun) {
-                        System.out.println("Generating Video");
-                    }
                     int len = this.MAX_LENGTH - label.length() - 2;
                     int half = len / 2;
                     int count = (int) ((percent / 100) * len);
                     String pLabel = "[";
                     for (int i = 0; i<len; i++) {
                         if (i < count) {
-                            pLabel += "=";
+                            if(i == (count-1)) {
+                                pLabel += ">";
+                            } else {
+                                pLabel += "=";
+                            }
                         } else {
                             pLabel += " ";
                         }
@@ -80,7 +83,18 @@ public class App
                             pLabel += label;
                         }
                     }
-                    System.out.print("\r" + pLabel);
+                    pLabel += "]";
+                    if (firstRun) {
+                        System.out.println("Generating Video");
+                        System.out.print(pLabel);
+                        firstRun = false;
+                    } else {
+                        System.out.print("\r" + pLabel);
+                    }
+                }
+                public void done() {
+                    System.out.println();
+                    System.out.println("Done");
                 }
             };
             vg.setListener(listener);
@@ -110,6 +124,7 @@ public class App
           throw e;
         }
         String[] parsedArgs = cmd.getArgs();
+        Option[] optionArgs = cmd.getOptions();
         if (cmd.hasOption("version")) {
           // let's find what version of the library we're running
           String version = io.humble.video_native.Version.getVersionInfo();
@@ -117,7 +132,14 @@ public class App
           System.out.println("Humble Version: " + version);
           System.out.println("commons-cli Version: 1.2");
           System.out.println("snakeYAML Version: 2.2");
-        } else if (cmd.hasOption("help") || parsedArgs.length == 0) {
+        } else if (cmd.hasOption("list-fonts")) {
+          String[] fonts = ConfigFont.getAllFonts();
+          System.out.println("Available Fonts on this system:");
+          for(String f : fonts){
+              System.out.println(f);
+          }
+          System.exit(0);
+        } else if (cmd.hasOption("help") || (parsedArgs.length == 0 && optionArgs.length == 0)) {
           HelpFormatter formatter = new HelpFormatter();
           if (parsedArgs.length == 0) {
             System.err.println("Error: No options or YAML file supplied!\n");
@@ -144,29 +166,29 @@ public class App
               }
           }
           //script
-          config.getScript().setScript(cmd.getOptionValue("script", config.getScript().getScript()));
+          config.getScript().setScript(cmd.getOptionValue("script-text", config.getScript().getScript()));
           //scriptFilePath
-          config.getScript().setPath(cmd.getOptionValue("scriptFilePath", config.getScript().getPath()));
+          config.getScript().setPath(cmd.getOptionValue("script-file", config.getScript().getPath()));
           //forground
-          config.getForground().setName(cmd.getOptionValue("forground", config.getForground().getName()));
+          config.getForground().setName(cmd.getOptionValue("color-fg", "white"));
           //background
-          config.getBackground().setName(cmd.getOptionValue("background", config.getBackground().getName()));
+          config.getBackground().setName(cmd.getOptionValue("color-bg", "black"));
           //fontName
-          config.getFont().setName(cmd.getOptionValue("fontName", config.getFont().getName()));
+          config.getFont().setName(cmd.getOptionValue("font-name", config.getFont().getName()));
           //fontStyle
-          config.getFont().setStyle(cmd.getOptionValue("fontStyle", config.getFont().getStyle()));
+          config.getFont().setStyle(cmd.getOptionValue("font-style", config.getFont().getStyle()));
           //fontSize
-          config.getFont().setSize(Integer.parseInt(cmd.getOptionValue("fontSize", String.valueOf(config.getFont().getSize()))));
+          config.getFont().setSize(Integer.parseInt(cmd.getOptionValue("font-size", String.valueOf(config.getFont().getSize()))));
           //videoSize
-          config.getVideo().setSize(Integer.parseInt(cmd.getOptionValue("videoSize", String.valueOf(config.getVideo().getSize()))));
+          config.getVideo().setSize(Integer.parseInt(cmd.getOptionValue("video-size", String.valueOf(config.getVideo().getSize()))));
           //videoFramerate
-          config.getVideo().setFramerate(Integer.parseInt(cmd.getOptionValue("videoFramerate", String.valueOf(config.getVideo().getFramerate()))));
+          config.getVideo().setFramerate(Integer.parseInt(cmd.getOptionValue("video-framerate", String.valueOf(config.getVideo().getFramerate()))));
           //videoName
-          config.getVideo().setFilename(cmd.getOptionValue("videoName", config.getVideo().getFilename()));
+          config.getVideo().setFilename(cmd.getOptionValue("video-name", config.getVideo().getFilename()));
           //videoFormat
-          config.getVideo().setFormat(cmd.getOptionValue("videoFormat", config.getVideo().getFormat()));
+          config.getVideo().setFormat(cmd.getOptionValue("video-format", config.getVideo().getFormat()));
           //videoCodec
-          config.getVideo().setCodec(cmd.getOptionValue("videoCodec", config.getVideo().getCodec()));
+          config.getVideo().setCodec(cmd.getOptionValue("video-codec", config.getVideo().getCodec()));
         }
         return config;
     }
@@ -176,6 +198,7 @@ public class App
         Options options = new Options();
         options.addOption("h", "help", false, "displays help");
         options.addOption("v", "version", false, "version of this library");
+        options.addOption("lf", "list-fonts", false, "List all the fonts in the system");
         options.addOption(OptionBuilder.withArgName("yaml")
             .withLongOpt("yaml")
             .hasArg().
@@ -230,7 +253,7 @@ public class App
             .withLongOpt("video-name")
             .hasArg().
             withDescription("Filename of the video. Default: telleprompt.mp4")
-            .create("vp"));
+            .create("vn"));
         options.addOption(OptionBuilder.withArgName("videoFormat")
             .withLongOpt("video-format")
             .hasArg().
@@ -241,6 +264,7 @@ public class App
             .hasArg().
             withDescription("The codec that will be used for the video. Default: determined by file ext")
             .create("vc"));
+        
 
         return options;
     }

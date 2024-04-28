@@ -8,4 +8,6 @@ public interface VideoGeneratorListener {
     
     public void updateProgress(double percent);
     
+    public void done();
+    
 }

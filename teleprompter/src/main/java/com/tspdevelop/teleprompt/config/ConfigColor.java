@@ -53,8 +53,43 @@ public class ConfigColor {
         this.blue = blue;
     }
     
+    private Color getColorByName(String name) {
+        if(name == null || name.isBlank()) {
+            return null;
+        }
+        switch(name) {
+            case "black":
+                return Color.BLACK;
+            case "blue":
+                return Color.BLUE;
+            case "cyan":
+                return Color.CYAN;
+            case "dark gray":
+                return Color.DARK_GRAY;
+            case "gray":
+                return Color.GRAY;
+            case "green":
+                return Color.GREEN;
+            case "light gray":
+                return Color.LIGHT_GRAY;
+            case "megenta":
+                return Color.MAGENTA;
+            case "oragne":
+                return Color.ORANGE;
+            case "pink":
+                return Color.PINK;
+            case "red":
+                return Color.RED;
+            case "white":
+                return Color.WHITE;
+            case "yellow":
+                return Color.YELLOW;
+        }
+        return null;
+    }
+    
     public Color getColor() throws ConfigException {
-        Color color = Color.getColor(name);
+        Color color = getColorByName(name);
         if (color == null) {
             if(green < 0 | green > 255) {
                 throw new ConfigException("Green must be between 0 and 255: " + String.valueOf(green));
