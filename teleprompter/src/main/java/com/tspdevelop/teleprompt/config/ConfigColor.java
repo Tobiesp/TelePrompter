@@ -2,6 +2,9 @@ package com.tspdevelop.teleprompt.config;
 
 import com.tspdevelop.teleprompt.config.exceptions.ConfigException;
 import java.awt.Color;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionBuilder;
 
 /**
  *
@@ -103,6 +106,53 @@ public class ConfigColor {
             color = new Color(red, green, blue);
         }
         return color;
+    }
+    
+    public static void ListSystemNamedColors() {
+        System.out.println("Named Colors in the system:");
+        System.out.println("- black");
+        System.out.println("- blue");
+        System.out.println("- cyan");
+        System.out.println("- dark gray");
+        System.out.println("- gray");
+        System.out.println("- green");
+        System.out.println("- light gray");
+        System.out.println("- megenta");
+        System.out.println("- oragne");
+        System.out.println("- pink");
+        System.out.println("- red");
+        System.out.println("- white");
+        System.out.println("- yellow");
+    }
+
+    @SuppressWarnings("static-access")
+    public static Option[] getCmdCLIOptions() {
+        Option[] options = new Option[3];
+        options[0] = OptionBuilder.withArgName("forground")
+            .withLongOpt("color-fg")
+            .hasArg().
+            withDescription("Display color of the text")
+            .create("cf");
+        options[1] = OptionBuilder.withArgName("background")
+            .withLongOpt("color-bg")
+            .hasArg().
+            withDescription("Background color for the display")
+            .create("cb");
+        options[2] = OptionBuilder.withArgName("list-colors")
+            .withLongOpt("list-colors")
+            .hasArg(false).
+            withDescription("List all the named colors for the system")
+            .create("lc");
+        return options;
+    }
+
+    public void processCLI(CommandLine cmd, String cmdKey) throws ConfigException {
+        if (cmd.hasOption(cmdKey)) {
+            this.name = cmd.getOptionValue(cmdKey);
+            if(this.name == null || this.name.isBlank()) {
+                throw new ConfigException("Color option " + cmdKey + " doesn't have a value");
+            }
+        }
     }
     
 }

@@ -3,6 +3,9 @@ package com.tspdevelop.teleprompt.config;
 import com.tspdevelop.teleprompt.config.exceptions.ConfigException;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionBuilder;
 
 /**
  *
@@ -85,6 +88,64 @@ public class ConfigFont {
             }
         }
         return new Font(font, s, size);
+    }
+
+    @SuppressWarnings("static-access")
+    public static Option[] getCmdCLIOptions() {
+        Option[] options = new Option[4];
+        options[0] = OptionBuilder.withArgName("list-font")
+            .withLongOpt("list-font")
+            .hasArg(false).
+            withDescription("List all the fonts in the system")
+            .create("lf");
+        options[1] = OptionBuilder.withArgName("fontName")
+            .withLongOpt("font-name")
+            .hasArg().
+            withDescription("Name of a font available on the current machine")
+            .create("fn");
+        options[2] = OptionBuilder.withArgName("fontStyle")
+            .withLongOpt("font-style")
+            .hasArg().
+            withDescription("Style of the font")
+            .create("fs");
+        options[3] = OptionBuilder.withArgName("fontSize")
+            .withLongOpt("font-size")
+            .hasArg().
+            withDescription("Size of the font")
+            .create("fz");
+        return options;
+    }
+    
+    public void processCLI(CommandLine cmd) throws ConfigException {
+        if (cmd.hasOption("list-fonts")) {
+          String[] fonts = ConfigFont.getAllFonts();
+          System.out.println("Available Fonts on this system:");
+          for(String f : fonts){
+              System.out.println(f);
+          }
+          System.exit(0);
+        }
+        if (cmd.hasOption("font-name")) {
+            this.name = cmd.getOptionValue("font-name");
+        }
+        
+        if (cmd.hasOption("font-style")) {
+            this.style = cmd.getOptionValue("font-style");
+            if (this.style == null) {
+                throw new ConfigException("Font style option was supplied without a value");
+            }
+        }
+        
+        if (cmd.hasOption("font-size")) {
+            try {
+                this.size = Integer.parseInt(cmd.getOptionValue("font-size"));
+                if (this.size < 1) {
+                    throw new ConfigException("Font size must be greater then 0");
+                }
+            } catch(NumberFormatException nfe) {
+                throw new ConfigException("Not a valid number for font size: " + cmd.getOptionValue("font-size"));
+            }
+        }
     }
     
 }

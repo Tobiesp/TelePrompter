@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionBuilder;
 
 /**
  *
@@ -100,6 +103,72 @@ public class ConfigScript {
             return 200;
         } else {
             return this.wordsPerMin;
+        }
+    }
+    
+    @SuppressWarnings("static-access")
+    public static Option[] getCmdCLIOptions() {
+        Option[] options = new Option[4];
+        options[0] = OptionBuilder.withArgName("script")
+            .withLongOpt("script-text")
+            .hasArg().
+            withDescription("The text for the script to use in the video")
+            .create("st");
+        options[1] = OptionBuilder.withArgName("scriptFilePath")
+            .withLongOpt("script-file")
+            .hasArg().
+            withDescription("The path to the script in a .txt file format")
+            .create("sp");
+        options[2] = OptionBuilder.withArgName("wordsPerMin")
+            .withLongOpt("words-per-min")
+            .hasArg().
+            withDescription("The speed the text should be read at")
+            .create("wpm");
+        options[3] = OptionBuilder.withArgName("delay")
+            .withLongOpt("delay")
+            .hasArg().
+            withDescription("Count down delay shown before the text starts scrolling")
+            .create("d");
+        
+        return options;
+    }
+    
+    public void processCLI(CommandLine cmd) throws ConfigException {
+        if (cmd.hasOption("script-text")) {
+            this.script = cmd.getOptionValue("script-text");
+        }
+        
+        if (cmd.hasOption("script-file")) {
+            this.path = cmd.getOptionValue("script-file");
+            File f = new File(this.path);
+            if (!f.exists()) {
+                throw new ConfigException("Could not find file at path: " + this.path);
+            }
+            if(!f.canRead()) {
+                throw new ConfigException("Could not read file at path: " + this.path);
+            }
+        }
+        
+        if(cmd.hasOption("words-per-min")) {
+            try {
+                this.wordsPerMin = Integer.parseInt(cmd.getOptionValue("words-per-min"));
+                if (this.wordsPerMin < 1) {
+                    throw new ConfigException("Words per minute must be greater then 0");
+                }
+            } catch(NumberFormatException nfe) {
+                throw new ConfigException("Not a valid number: " + cmd.getOptionValue("words-per-min"));
+            }
+        }
+        
+        if(cmd.hasOption("delay")) {
+            try {
+                this.delay = Integer.parseInt(cmd.getOptionValue("delay"));
+                if (this.delay < 1) {
+                    throw new ConfigException("Delay must be greater then 0");
+                }
+            } catch(NumberFormatException nfe) {
+                throw new ConfigException("Not a valid number: " + cmd.getOptionValue("delay"));
+            }
         }
     }
     
