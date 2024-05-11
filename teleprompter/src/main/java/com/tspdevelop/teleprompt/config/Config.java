@@ -203,6 +203,7 @@ public class Config {
         try {
             OutputStream os = new FileOutputStream(f);
             os.write(writer.toString().getBytes());
+            os.close();
         } catch (FileNotFoundException ex) {
             System.err.println("Error: Failed to write Example.yaml: " + ex.getMessage());
         } catch (IOException ex) {

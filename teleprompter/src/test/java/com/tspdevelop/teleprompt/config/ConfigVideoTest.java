@@ -16,8 +16,6 @@
 package com.tspdevelop.teleprompt.config;
 
 import com.tspdevelop.teleprompt.config.exceptions.ConfigException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.Option;
