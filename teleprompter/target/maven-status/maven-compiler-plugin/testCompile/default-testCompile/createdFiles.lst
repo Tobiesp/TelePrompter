@@ -1,1 +1,6 @@
+com/tspdevelop/teleprompt/config/ConfigScriptTest.class
+com/tspdevelop/teleprompt/config/ConfigTest.class
+com/tspdevelop/teleprompt/config/ConfigVideoTest.class
+com/tspdevelop/teleprompt/config/ConfigColorTest.class
+com/tspdevelop/teleprompt/config/ConfigFontTest.class
 com/tspdevelop/teleprompt/AppTest.class

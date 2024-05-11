@@ -126,13 +126,15 @@ public class FrameGenerator {
     public BufferedImage nextFrame() {
         if(this.delay > 0 && this.delayIndex < this.delayTotalFrames) {
             if (this.delayIndex == 0) {
+                this.delayIndex += 1;
                 return this.getDelayScreen(delay);
             } else {
                 int second = Math.floorDiv(this.delayIndex, this.framesPerSec);
                 if(Math.floorMod(this.delayIndex, this.framesPerSec) > 0) {
                     second += 1;
                 }
-                return this.getDelayScreen(second);
+                this.delayIndex += 1;
+                return this.getDelayScreen(this.delay - second);
             }
         }
         Frame frame = this.getLinesOnScreen();
