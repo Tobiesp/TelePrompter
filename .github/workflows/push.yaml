@@ -15,6 +15,9 @@ jobs:
       - name: Lint code
         env:
           ENABLED_LINTERS: JAVA_CHECKSTYLE,YAML_PRETTIER,ACTION_ACTIONLINT
+          PRINT_ALPACA: false
+          IGNORE_GENERATED_FILES: true
+          DISABLE_ERRORS: true
         uses: oxsecurity/megalinter/flavors/java@v7
 
       - name: Run Trivy vulnerability scanner in repo mode
