@@ -13,6 +13,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Lint code
+        env:
+          ENABLED_LINTERS: JAVA_CHECKSTYLE,YAML_PRETTIER,ACTION_ACTIONLINT
         uses: oxsecurity/megalinter/flavors/java@v7
 
       - name: Run Trivy vulnerability scanner in repo mode
