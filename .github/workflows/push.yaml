@@ -7,6 +7,7 @@ on:
 jobs:
   push:
     runs-on: ubuntu-latest
+    
 
     steps:
       - name: Checkout code
@@ -37,3 +38,11 @@ jobs:
           cache: 'maven'
           cache-dependency-path: |
             **/pom.xml
+      - run: mvn --batch-mode --update-snapshots verify
+        working-directory: teleprompter
+      - run: mkdir staging && cp target/*.jar staging
+        working-directory: teleprompter
+      - uses: actions/upload-artifact@v4
+        with:
+          name: teleprompter/Package
+          path: teleprompter/staging
