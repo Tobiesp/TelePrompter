@@ -44,5 +44,5 @@ jobs:
         working-directory: teleprompter
       - uses: actions/upload-artifact@v4
         with:
-          name: teleprompter/Package
+          name: Package
           path: teleprompter/staging
