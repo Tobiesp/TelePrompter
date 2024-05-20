@@ -1,13 +1,15 @@
-## YAML Template.
----
-name: 1. Pull request
+name: push
 
-on:
-    pull_request:
+on: 
+  push:
+    tags:
+      - '*'
+  workflow_dispatch:
 
 jobs:
-  pr:
+  push:
     runs-on: ubuntu-latest
+    
 
     steps:
       - name: Checkout code
@@ -40,3 +42,19 @@ jobs:
             **/pom.xml
       - run: mvn --batch-mode --update-snapshots verify
         working-directory: teleprompter
+
+      - run: mkdir staging && cp target/*.jar staging/teleprompter-${{ github.ref_name }}.jar
+        working-directory: teleprompter
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Package
+          path: teleprompter/staging
+      
+      - name: Release with Notes
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            staging/teleprompter-${{ github.ref_name }}.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
