@@ -55,6 +55,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            staging/teleprompter-${{ github.ref_name }}.jar
+            teleprompter/staging/teleprompter-${{ github.ref_name }}.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
