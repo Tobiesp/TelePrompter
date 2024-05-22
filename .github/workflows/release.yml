@@ -52,9 +52,8 @@ jobs:
           path: teleprompter/staging
       
       - name: Release with Notes
-        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
         with:
           files: |
             teleprompter/staging/teleprompter-${{ github.ref_name }}.jar
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
